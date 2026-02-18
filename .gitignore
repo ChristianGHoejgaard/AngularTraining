@@ -9,20 +9,18 @@
 
 # Node modules and dependency files
 /my-app/node_modules/
-/my-app/package-lock.json
-/my-app/yarn.lock
 
 # Environment files
-/.env
+/my-app/.env
 
 # Angular CLI and build artefacts
 /my-app/.angular-cli.json
 /my-app/.ng/
 
 # TypeScript cache
-*.tsbuildinfo
+/my-app/*.tsbuildinfo
 
 # Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+/my-app/npm-debug.log*
+/my-app/yarn-debug.log*
+/my-app/yarn-error.log*
