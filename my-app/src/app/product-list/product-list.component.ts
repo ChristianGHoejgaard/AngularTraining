@@ -4,13 +4,14 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 import { SortPipe } from '../Pipes/sort.pipe';
 import { ProductsService } from '../Services/products.service';
 import { FavoritesComponent } from '../favorites/favorites.component';
+import { ProductViewComponent } from '../product-view/product-view.component';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductDetailComponent, SortPipe, FavoritesComponent],
+  imports: [ProductDetailComponent, SortPipe, FavoritesComponent, ProductViewComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
-  providers: [ProductsService]
+  providers: [ProductsService],
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];

@@ -1,13 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Product } from '../product';
 import { ProductsService } from '../Services/products.service';
-
+import { favoritesFactory } from './favorites';
 @Component({
   selector: 'app-favorites',
-  imports: [CommonModule],
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.css'
+  styleUrl: './favorites.component.css',
+  providers: [
+    {provide: ProductsService, useFactory: favoritesFactory(true)}
+  ]
 })
 export class FavoritesComponent implements OnInit {
   products: Product[] = [];
