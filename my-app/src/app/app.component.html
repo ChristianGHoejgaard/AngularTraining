@@ -1,3 +1,4 @@
+<header>{{ title }}</header>
 <main class="main">
   <div>
     <app-product-list />
@@ -5,3 +6,4 @@
 </main>
 <footer appCopyright> - v{{settings.version}}</footer>
 <router-outlet />
+<app-key-logger [numeric]="true"></app-key-logger>

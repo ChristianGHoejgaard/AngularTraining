@@ -1,3 +1,5 @@
+@let products = (products$ | async)!;
+
 @if (products.length > 0) {
     <h1>Products ({{products.length}})</h1>
 }
@@ -5,7 +7,12 @@
 <ul class="pill-group">
     @for (product of products | sort:'price'; track product.id; let i = $index) {
         <li class="pill" (click)="selectedProduct = product">
-            <app-product-view [id]="product.id"></app-product-view>
+            @switch (product.title) {
+                @case ('Keyboard') {⌨️}
+                @case ('Microphone') {🎤}
+                @default {🏷️}            
+            }
+            {{i+1}}. {{product.title}}
         </li>
     } @empty {
         <p>No products found!</p>
@@ -13,5 +20,3 @@
 </ul>
 
 <app-product-detail #productDetail [product]="selectedProduct" (added)="onAdded($event)"></app-product-detail>
-<h1>Favorites</h1>
-<app-favorites></app-favorites>
