@@ -3,4 +3,5 @@ export interface Product {
     title: string;
     price: number;
     categories: Record<number, string>;
+    category: string;
 }
