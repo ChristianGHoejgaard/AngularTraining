@@ -3,9 +3,16 @@
     <div>
         <p>You selected: <strong>{{product.title}}</strong></p>
         <p>{{product.price | currency:'EUR'}}</p>
+        <input placeholder="New price" #price type="number" />
+        <button (click) = "changePrice(product, price.value)" class="secondary">Change</button>
         <div class="pill-group">
             <p class="pill">{{ product.category }}</p>
         </div>
-        <button (click)="addToCart()">Add to cart</button>
+        <div class="button-group">
+            @if(authService.isLoggedIn()) {
+                <button (click)="addToCart()">Add to cart</button>
+            }
+            <button class="delete" (click)="remove(product)">Delete</button>
+        </div>
     </div>
 }
