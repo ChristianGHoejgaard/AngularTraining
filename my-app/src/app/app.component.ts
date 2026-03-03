@@ -1,13 +1,12 @@
-import { Component, inject, Signal, computed, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ProductListComponent } from "./product-list/product-list.component";
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CopyrightDirective } from './Directives/copyright.directive';
-import { APP_SETTINGS, appSettings } from './app.settings';
+import { APP_SETTINGS } from './app.settings';
 import { AuthComponent } from './auth/auth.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProductListComponent, CopyrightDirective, AuthComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CopyrightDirective, AuthComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

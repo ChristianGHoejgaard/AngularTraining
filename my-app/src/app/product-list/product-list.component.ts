@@ -1,25 +1,32 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Product} from '../product';
-import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { SortPipe } from '../Pipes/sort.pipe';
-import { ProductsService } from '../Services/products.service';
-import { ProductCreateComponent } from '../product-create/product-create.component';
+import { RouterLink, ActivatedRoute } from '@angular/router';
+import { Observable, switchMap, of } from 'rxjs';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductDetailComponent, SortPipe, ProductCreateComponent],
+  imports: [SortPipe, AsyncPipe, RouterLink],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
-export class ProductListComponent {  
-  products = toSignal(inject(ProductsService).getProducts(), {
-    initialValue: []
-  });
+export class ProductListComponent implements OnInit {  
+  products$: Observable<Product[]> | undefined;
   
-  selectedProduct: Product | undefined;
+  constructor(private route: ActivatedRoute) {}
 
-  onAdded() {
-    alert(`${this.selectedProduct?.title} added to the cart!`);
+  ngOnInit(): void {
+    this.getProducts();
   }
+
+  private getProducts() {
+    this.products$ = this.route.data.pipe(
+      switchMap(data => of(data['products']))
+    );
+  }
+
+  // onAdded() {
+  //   alert(`${this.selectedProduct?.title} added to the cart!`);
+  // }
 }

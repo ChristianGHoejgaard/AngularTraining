@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product} from '../product';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { ProductsService } from '../Services/products.service';
 import { AuthService } from '../Services/auth.service';
 
@@ -11,29 +12,36 @@ import { AuthService } from '../Services/auth.service';
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
-export class ProductDetailComponent implements OnChanges {
+export class ProductDetailComponent implements OnInit {
   product$: Observable<Product> | undefined;
-  added = output();
-  id = input<number>();
-  deleted = output();
+  id = input<string>();
 
-  constructor(private productsService: ProductsService, public authService: AuthService) { }
+  constructor(
+    private productsService: ProductsService, 
+    public authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.product$ = this.productsService.getProduct(this.id()!);
+  ngOnInit(): void {
+    this.product$ = this.productsService.getProduct(Number(this.id()!));
+    // this.product$ = this.route.paramMap.pipe(switchMap(params => { 
+    //   return this.productsService.getProduct(Number(params.get('id')));
+    //   })
+    // );
   }
   
   addToCart() {
-    this.added.emit();
   }
 
   changePrice(product: Product, price: string) {
-    this.productsService.updateProduct(product.id, Number(price)).subscribe();
+    this.productsService.updateProduct(product.id, Number(price)).subscribe(() => {
+        this.router.navigate(['/products']);
+      });
   }
 
   remove(product: Product) {
     this.productsService.deleteProduct(product.id).subscribe(() => {
-      this.deleted.emit();
+      this.router.navigate(['/products']);
     });
   }
 }
