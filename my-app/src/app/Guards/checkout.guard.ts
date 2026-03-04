@@ -1,7 +1,13 @@
 import { CanDeactivateFn } from '@angular/router';
 import { CartComponent } from '../cart/cart.component';
+import { inject } from '@angular/core';
+import { CartService } from '../Services/cart.service';
 
 export const checkoutGuard: CanDeactivateFn<CartComponent> = () => {
-  const confirmation = confirm('You have pending items in your cart. Do you want to continue?');
-  return confirmation;
+  const cartService = inject(CartService);
+  if(cartService.cart) {
+    const confirmation = confirm('You have pending items in your cart. Do you want to continue?');
+    return confirmation;
+  }
+  return true;
 };

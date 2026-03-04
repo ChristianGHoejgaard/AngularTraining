@@ -1,21 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../Services/products.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-product-create',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
-export class ProductCreateComponent {
-  constructor(private productsService: ProductsService, private router: Router) {}
+export class ProductCreateComponent implements OnInit {
 
-  createProduct(title: string, price: string, category: string) {
-    this.productsService.addProduct({
-      title, 
-      price: Number(price), 
-      category 
-    }).subscribe(() => this.router.navigate(['/products']));
+  productForm: FormGroup<{
+    title: FormControl<string>,
+    price: FormControl<number|undefined>,
+    category: FormControl<string>
+  }> | undefined;
+
+  constructor(private productsService: ProductsService, private router: Router, private builder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.buildForm();    
+  }
+
+  private buildForm() {
+    this.productForm = this.builder.nonNullable.group({
+      title: [''],
+      price: this.builder.nonNullable.control<number|undefined>(undefined),
+      category: ['']
+    });
+  }
+
+  createProduct() {
+    this.productsService.addProduct(this.productForm!.value)
+      .subscribe(() => this.router.navigate(['/products']));
   }
 }

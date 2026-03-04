@@ -2,39 +2,40 @@ import { CommonModule } from '@angular/common';
 import { Component, input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product} from '../product';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductsService } from '../Services/products.service';
 import { AuthService } from '../Services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CartService } from '../Services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
 export class ProductDetailComponent implements OnInit {
   product$: Observable<Product> | undefined;
   id = input<string>();
+  price: number | undefined;
 
   constructor(
     private productsService: ProductsService, 
     public authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.product$ = this.productsService.getProduct(Number(this.id()!));
-    // this.product$ = this.route.paramMap.pipe(switchMap(params => { 
-    //   return this.productsService.getProduct(Number(params.get('id')));
-    //   })
-    // );
   }
   
-  addToCart() {
+  addToCart(id: number) {
+    this.cartService.addProduct(id).subscribe();
   }
 
-  changePrice(product: Product, price: string) {
-    this.productsService.updateProduct(product.id, Number(price)).subscribe(() => {
+  changePrice(product: Product) {
+    this.productsService.updateProduct(product.id, this.price!).subscribe(() => {
         this.router.navigate(['/products']);
       });
   }
