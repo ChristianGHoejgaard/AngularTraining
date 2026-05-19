@@ -19,14 +19,14 @@
         }
     </mat-form-field>
 
-    <div>
-        <label for="category">Category</label>
-        <select id="category" #category formControlName="category">
-            <option>Select a category</option>
-            <option value="electronics">Electronics</option>
-            <option value="jewelery">Jewelery</option>        
-        </select>    
-    </div>
+    <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+            <mat-option value="electronics">Electronics</mat-option>
+            <mat-option value="jewelery">Jewelery</mat-option>
+            <mat-option>Other</mat-option>
+        </mat-select>
+    </mat-form-field>
     <div>
         <button mat-raised-button type="submit" [disabled]="productForm?.invalid">Create</button>
     </div>

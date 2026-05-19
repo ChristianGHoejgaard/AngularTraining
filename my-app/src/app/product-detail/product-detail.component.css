@@ -46,3 +46,7 @@ button.delete {
 :host {
     width: 450px;
 }
+
+mat-chip-set {
+    margin-bottom: 1.375rem;
+}

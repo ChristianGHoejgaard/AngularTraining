@@ -7,10 +7,11 @@ import { Subscription } from 'rxjs';
 import { MatButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatFormField, MatError, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
 
 @Component({
   selector: 'app-product-create',
-  imports: [ReactiveFormsModule, MatButton, MatInput, MatFormField, MatError, MatLabel],
+  imports: [ReactiveFormsModule, MatButton, MatInput, MatFormField, MatError, MatLabel, MatSelect, MatOption],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
