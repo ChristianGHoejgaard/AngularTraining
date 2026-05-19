@@ -8,10 +8,25 @@ import { AuthService } from '../Services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../Services/cart.service';
 import { PriceMaximumDirective } from '../Directives/price-maximum.directive';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, FormsModule, PriceMaximumDirective],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    PriceMaximumDirective, 
+    MatButton, 
+    MatInput, 
+    MatFormField, 
+    MatError, 
+    MatIcon, 
+    MatSuffix, 
+    MatIconButton
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
