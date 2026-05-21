@@ -55,3 +55,7 @@ padding: 1rem;
 box-sizing: inherit;
 position: relative;
 }
+
+button {
+  margin: 5px;
+}
